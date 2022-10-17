@@ -1,6 +1,6 @@
 <productos>
     <producto>
-        <nombre type="productoDesayuno">Cereales</nombre>
+        <nombre>Cereales</nombre>
         <precio>3.45</precio>
     </producto>
     <producto>

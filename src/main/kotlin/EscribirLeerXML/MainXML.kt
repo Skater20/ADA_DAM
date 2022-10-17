@@ -1,56 +1,52 @@
-import org.w3c.dom.Document
-import org.w3c.dom.Element
-import org.w3c.dom.Node
-import org.w3c.dom.NodeList
+import org.w3c.dom.*
 import java.io.File
 import javax.xml.parsers.DocumentBuilderFactory
 
 fun main() {
 
     /*
-    LEER ARCHIVOS XML
+   LEER FICHEROS XML
+    */
+
+    /*
+    Los pasos a seguir son "más o menos" iguales a los que hemos visto antes
      */
-
-    //Para leer archivos XML usamos una implementacion del DOM
-    //Esta implementacion está en DocumentBuilderFactory
-
-    //1º Abrimos el archivo xml (igual que en casos anteriores)
+    //1º Abrir el archivo
     val ficheroXML: File = File("resources/productos.xml")
 
-    //2º Debemos construir nuestro arbol DOM.
-    //Para ello debemos usar varios métodos
-    val ficheroXMLDOM: Document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(ficheroXML)
+    //2º Comprobamos su correcta apertura
+    if (ficheroXML.exists() || ficheroXML.createNewFile()) {
+        println("Fichero creado correctamente: ${ficheroXML.name}")
+    }
 
-    //(Opcional) Podemos usar la funcion .normalize() para eliminar nodos vacios
-    ficheroXMLDOM.documentElement.normalize()
+    //3º Ahora tenemos que conseguir... parsear ese documento y crear
+    //el ARBOL DOM:
+    val nodoPadre: Document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(ficheroXML)
 
-    println(ficheroXMLDOM.documentElement) //Imprime el elemento del documento (El nodo padre)
-    println(ficheroXMLDOM.nodeType) //Imprime el elemento del documento (El nodo padre)
-
-    //Obtenemos todos los elementos con tagName = producto
-    val productos: NodeList = ficheroXMLDOM.getElementsByTagName("producto")
-
-    //Ahora empezamos a iterar sobre esa NodeList, sobre el arbol DOM
-    //Aquí empiezan los jajas
+    //4º Ahora vienen las lágrimas
+    val productos: NodeList = nodoPadre.getElementsByTagName("producto")
     for (i in 0..productos.length - 1) {
-        println("Tipo Nodo: ${productos.item(i).nodeType}")
+        println(productos.item(i))
         if (productos.item(i).nodeType == Node.ELEMENT_NODE) {
-            var producto: Element = productos.item(i) as Element
+            val producto: Element = productos.item(i) as Element
 
-            var itemsProducto: NodeList = producto.childNodes
+            val itemsProducto: NodeList = producto.childNodes
 
             for (j in 0..itemsProducto.length - 1) {
 
                 if (itemsProducto.item(j).nodeType == Node.ELEMENT_NODE) {
-                    var item: Element = itemsProducto.item(j) as Element
-                    println("${item.tagName}: ${item.textContent}")
+                    val itemProducto: Element = itemsProducto.item(j) as Element
+
+                    val textos: NodeList = itemProducto.childNodes
+
+                    for (k in 0..textos.length - 1) {
+                        if (textos.item(k).nodeType == Node.TEXT_NODE) {
+                            val texto: Text = textos.item(k) as Text
+                            println(texto)
+                        }
+                    }
                 }
             }
-
         }
-
-
     }
-
-
 }
