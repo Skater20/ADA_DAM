@@ -16,7 +16,7 @@ fun main() {
     val ficheroLectura: File = File("resources/pruebaLectura.txt")
 
     //2º Comprobamos si el fichero se ha abierto correctamente
-    if (ficheroLectura.createNewFile()) {
+    if (ficheroLectura.createNewFile() || ficheroLectura.exists() ) {
         println("Fichero creado: ${ficheroLectura.name}")
     } else {
         println("Fichero ya existente: ${ficheroLectura.name}")
@@ -83,7 +83,7 @@ fun main() {
     val ficheroEscritura: File = File("resources/pruebaEscritura.txt")
 
     //2º Comprobamos si el fichero se ha abierto correctamente
-    if (ficheroEscritura.createNewFile()) {
+    if ( ficheroEscritura.createNewFile() || ficheroEscritura.exists() ) {
         println("Fichero creado: ${ficheroEscritura.name}")
     } else {
         println("Fichero ya existente: ${ficheroEscritura.name}")
