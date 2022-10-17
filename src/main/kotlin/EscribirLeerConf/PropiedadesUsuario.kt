@@ -1,4 +1,4 @@
-package ClasesUsuario
+package EscribirLeerConf
 
 class PropiedadesUsuario(user: String, password: String, port: String, server: String) {
 

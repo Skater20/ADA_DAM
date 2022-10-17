@@ -1,4 +1,4 @@
-import ClasesUsuario.PropiedadesUsuario
+import EscribirLeerConf.PropiedadesUsuario
 import java.io.FileReader
 import java.io.FileWriter
 import java.io.Reader
