@@ -25,6 +25,8 @@ fun main() {
 
     //4º Ahora vienen las lágrimas
     val productos: NodeList = nodoPadre.getElementsByTagName("producto")
+    val mMap: MutableMap<String, String> = mutableMapOf<String, String>()
+
     for (i in 0..productos.length - 1) {
         println(productos.item(i))
         if (productos.item(i).nodeType == Node.ELEMENT_NODE) {
@@ -36,6 +38,8 @@ fun main() {
 
                 if (itemsProducto.item(j).nodeType == Node.ELEMENT_NODE) {
                     val itemProducto: Element = itemsProducto.item(j) as Element
+
+                    mMap.put(itemProducto.nodeName, itemProducto.nodeValue)
 
                     val textos: NodeList = itemProducto.childNodes
 
