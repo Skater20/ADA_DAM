@@ -63,11 +63,13 @@ fun buscarEnXML(personaje: String, mSet: MutableSet<String>) : MutableMap<String
 
     //4º Iteramos sobre todos los nodos
     for(i in 0..personajes.length-1){
+        //Cada item corresponde con todos los personajes encontrados en el getElementsByTagname
         val personaje: Node = personajes.item(i)
 
-        //5º Ya estamos en el personaje, vamos a iterar sobre todos sus atributos para ENCONTRAR la info deseada
+        //5º Teniendo ya cada personaje, vamos a iterar sobre todos sus atributos para ENCONTRAR la info deseada
         //PERO DE FORMA RECURSIVA
-        //Entonces, iteramos sobre toda la info que queremos encontrar
+        //(Adicionalmente) tenemos que iterar sobre nuestro set de informacion
+        //donde tenemos toda la info que queremos encontrar
         mSet.forEach{info -> buscarConRecursividad(personaje, info, returnMap)}
     }
 
