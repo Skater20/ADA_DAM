@@ -64,4 +64,7 @@ fun main(args: Array<String>) {
 
     println("Contraseña: "+ prop.getProperty("password"))
     println("Usuario: "+ prop.getProperty("user"))
+
+    reader.close()
+    writer.close()
 }
