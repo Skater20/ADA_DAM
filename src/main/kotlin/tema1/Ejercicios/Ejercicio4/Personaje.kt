@@ -4,7 +4,7 @@ class Personaje(
     var id: String,
     var name: String,
     var description: String,
-    var comics: MutableList<Comic>
+    var comics: MutableList<Comic>?
 ) {
 
     /**
