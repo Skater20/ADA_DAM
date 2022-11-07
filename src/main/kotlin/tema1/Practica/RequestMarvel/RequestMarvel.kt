@@ -1,4 +1,4 @@
-package RequestMarvel
+package tema1.Practica.RequestMarvel
 
 import java.io.File
 import java.io.PrintWriter
@@ -44,7 +44,7 @@ object RequestMarvel {
         val client = HttpClient.newBuilder().build();
 
         val requestApi: String =
-            "http://gateway.marvel.com/v1/public/comics?limit=100&offset=${offsetObj}&ts=${ts}&apikey=${publicKey}&hash=${apiKey}"
+            "http://gateway.marvel.com/v1/public/comics?limit=100&offset=${offsetObj}&ts=$ts&apikey=$publicKey&hash=$apiKey"
 
         val request = HttpRequest.newBuilder()
             .uri(URI.create(requestApi))

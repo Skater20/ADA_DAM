@@ -1,4 +1,4 @@
-import EscribirLeerConf.PropiedadesUsuario
+import tema1.Practica.EscribirLeerConf.PropiedadesUsuario
 import java.io.FileReader
 import java.io.FileWriter
 import java.io.Reader

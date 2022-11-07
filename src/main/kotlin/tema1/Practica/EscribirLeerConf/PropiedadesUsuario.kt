@@ -1,4 +1,4 @@
-package EscribirLeerConf
+package tema1.Practica.EscribirLeerConf
 
 class PropiedadesUsuario(user: String, password: String, port: String, server: String) {
 
