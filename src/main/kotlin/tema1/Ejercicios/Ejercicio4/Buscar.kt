@@ -2,6 +2,7 @@ import org.w3c.dom.Document
 import org.w3c.dom.Element
 import org.w3c.dom.Node
 import org.w3c.dom.NodeList
+import tema1.Ejercicios.Ejercicio4.Comic
 import tema1.Ejercicios.Ejercicio4.Personaje
 import java.io.File
 import javax.xml.parsers.DocumentBuilderFactory
@@ -11,10 +12,55 @@ object Buscar {
     val pathXMLComics: String = "resources/marvel/comicsMarvelTODOS.xml"
     val pathXMLPjs: String = "resources/marvel/personajesMarvelTODOS.xml"
 
-    fun buscarComic() {
+    fun buscarComic(idComic: String) {
         println("***Buscando Comic***")
 
+        var response: MutableMap<Number, Comic> = mutableMapOf<Number, Comic>()
 
+        val fichXML: File = File(pathXMLComics)
+        val document: Document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(fichXML)
+        document.documentElement.normalize()
+
+        val results: NodeList = document.getElementsByTagName("results")
+
+        for (i in 0..results.length-1){
+            buscarComicRecursividad(results.item(i), idComic, response)
+        }
+
+    }
+
+    private fun buscarComicRecursividad(nodo: Node, idComic: String, response: MutableMap<Number, Comic>) {
+        if (nodo.nodeType == Node.ELEMENT_NODE){
+            val nodosHijos: NodeList = nodo.childNodes
+            for (i in 0..nodosHijos.length-1){
+                buscarComicRecursividad(nodosHijos.item(i), idComic, response)
+            }
+        }
+
+        if(nodo.nodeType == Node.TEXT_NODE &&  nodo.textContent.trim().isNotEmpty() || nodo.textContent.trim().isNotBlank()){
+            val contenidoNodo: String = nodo.textContent.trim()
+            if(contenidoNodo == idComic){
+                println("Comic encontrado: $idComic")
+
+                //Rellena el objeto Comic desde el nodo donde sabemos que está el comic
+                val comic: Comic = getDatosComic(nodo)
+
+                //Inicializo el mapa con la información a devolver
+                response.put(200, comic)
+            }
+        }
+    }
+
+    private fun getDatosComic(nodo: Node) : Comic{
+
+        val id: String = nodo.textContent
+        val nodoResult: Element = nodo.parentNode.parentNode as Element
+
+        val titulo: String = nodoResult.getElementsByTagName("title").item(0).textContent
+        val descr: String = nodoResult.getElementsByTagName("description").item(0).textContent
+
+        val comic: Comic = Comic(id, titulo, descr)
+        return comic
     }
 
     fun buscarPj(namePj: String): MutableMap<Number, Personaje> {
@@ -48,11 +94,11 @@ object Buscar {
 
         if(nodo.nodeType == Node.TEXT_NODE &&  nodo.textContent.trim().isNotEmpty() || nodo.textContent.trim().isNotBlank()){
             val contenidoNodo: String = nodo.textContent.trim()
-            if(contenidoNodo.equals(namePj)){
+            if(contenidoNodo == namePj){
                 println("personaje encontrado: ${namePj}")
 
                 //Rellena el objeto personaje desde el nodo donde sabemos que está el pj
-                var pj: Personaje = getDatosPj(nodo)
+                val pj: Personaje = getDatosPj(nodo)
 
                 //Inicializo el mapa con la información a devolver
                 response.put(200, pj)
